@@ -1,0 +1,34 @@
+.document-preview-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.document-preview-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px; /* Consistent width */
+  height: 150px; /* Consistent height */
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.document-preview-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+

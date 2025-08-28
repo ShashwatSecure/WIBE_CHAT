@@ -1,0 +1,154 @@
+.search-sidebar {
+  position: fixed;
+  top: 0;
+  right: -350px; /* Hidden by default */
+  width: 350px;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out; /* Smooth animation */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-sidebar.open {
+  right: 3.5rem; /* Slide in */
+}
+
+.sidebar-header {
+  padding: 15px 20px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+
+
+.sidebar-content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.sidebar-content form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sidebar-content input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  font-size: 0.95em;
+  background-color: #f8f9fa;
+}
+
+.sidebar-content button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-content button:hover {
+  background-color: #323232;
+}
+
+.search-message {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #dc3545;
+  text-align: center;
+}
+
+.searched-user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Added to push content to ends */
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px; /* Slightly more rounded corners */
+  background-color: #ffffff; /* White background for a cleaner look */
+  margin-bottom: 8px; /* Reduced margin for tighter list */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* More prominent shadow for modern feel */
+  transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+  cursor: pointer; /* Indicate clickable */
+}
+
+.searched-user-card:hover {
+  transform: translateY(-2px); /* Lift effect on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+}
+
+.searched-user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #007bff;
+}
+
+.searched-user-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Changed from self-start to flex-start for consistency */
+}
+
+.searched-user-card h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1em; /* Slightly larger name */
+  font-weight: 600;
+}
+
+.searched-user-card p {
+  color: #666; /* Darker grey for better readability */
+  margin: 2px 0 0; /* Adjusted margin */
+  font-size: 0.85em; /* Slightly smaller email */
+}
+
+.searched-user-actions {
+  display: flex;
+  gap: 8px; /* Space between buttons */
+}
+
+.searched-user-card button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px; /* Increased padding for buttons */
+  border-radius: 20px; /* Pill-shaped buttons */
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.searched-user-card button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.searched-user-card button:active {
+  transform: translateY(0);
+}
+
+.friend-name-tick-icon {
+  color: #28a745; /* Green color for the tick */
+  font-size: 0.8em; /* Smaller size */
+  margin-left: 5px; /* Space from the name */
+  vertical-align: middle; /* Align with text */
+}
+

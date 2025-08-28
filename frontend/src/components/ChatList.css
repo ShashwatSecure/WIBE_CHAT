@@ -1,0 +1,199 @@
+.chat-list {
+    width: 350px;    /* border-right: 1px solid #e0e0e0; */
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.chat-list-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: black;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  display: flex;
+  justify-content: flex-start; /* Align items to the start */
+  align-items: center;
+  gap: 10px; /* Space between logo and title */
+  position: relative; /* Added for positioning search icon */
+}
+
+.chat-list-logo {
+  width: 40px; /* Adjust size as needed */
+  height: auto;
+  filter: brightness(0) invert(1); /* Make logo white */
+}
+
+.chat-list-search-input {
+  padding: 10px 20px;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  outline: none;
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.chat-list-items {
+    background-color: #000000;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.chat-list-item {
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    position: relative;
+    background-color: #0d0d0d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.chat-list-item.active {
+  background-color: #e6f7ff; /* Light blue for active chat */
+  border-left: 4px solid #007bff; /* Highlight active chat */
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2); /* Blue shadow for active */
+  transform: translateY(-2px); /* Lift for active */
+}
+
+.avatar-container {
+  position: relative;
+  margin-right: 15px;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: #4caf50; /* Green for online */
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.offline-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: #f44336; /* Red for offline */
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.chat-list-item .avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #FFCF00;
+}
+
+.chat-list-item .chat-info {
+  text-align: left;
+}
+
+.chat-list-item .chat-name {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: #333;
+  margin-bottom: -5px; /* Move name slightly up */
+}
+
+.chat-list-item .last-message {
+  color: #777;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 3px;
+}
+
+.chat-list-item .chat-time {
+  font-size: 0.8em;
+  color: #999;
+}
+
+.time-status-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push to the right */
+  flex-shrink: 0; /* Prevent shrinking */
+  gap: 5px; /* Space between time and status */
+}
+
+.chat-item-options {
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+  position: relative; /* For dropdown positioning */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 30px; /* Adjust as needed */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 120px;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.unread-count {
+  position: absolute;
+  top: -5px; /* Adjust as needed */
+  right: -5px; /* Adjust as needed */
+  background-color: #007bff; /* Blue background for unread count */
+  color: white;
+  border-radius: 50%;
+  padding: 3px 8px;
+  font-size: 0.7em;
+  min-width: 15px;
+  text-align: center;
+  z-index: 1; /* Ensure it's above the avatar */
+}
+
+.message-status {
+  font-size: 0.7em; /* Smaller font size */
+  margin-left: 5px; /* Space from message */
+  vertical-align: middle; /* Align with text */
+  color: #888; /* Default grey for sent/delivered */
+  text-shadow: 0 0 1px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+.seen-ticks {
+  color: #007bff; /* Blue for seen */
+  text-shadow: 0 0 2px rgba(0, 123, 255, 0.4); /* More prominent blue shadow */
+}
+
+.chat-list-title {
+  color: white;
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 1.5em; /* Adjust as needed */
+}

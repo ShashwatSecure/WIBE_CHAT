@@ -1,0 +1,22 @@
+.input-wrapper .send-msg {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* background-color: #007bff; */
+    color: #fff7f7;
+    border: none;
+    border-radius: 50%;
+    width: 57px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.2s ease;
+}
+
+.input-wrapper .send-msg:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

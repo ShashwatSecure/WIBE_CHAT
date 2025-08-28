@@ -1,0 +1,262 @@
+.message-list {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column; /* Messages stack vertically */
+  gap: 10px; /* Space between messages */
+  z-index: 1; /* Ensure it's above background pattern */
+}
+
+.message {    max-width: 40%;    padding: 12px 15px;    border-radius: 18px;    position: relative;    word-wrap: break-word;    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);}
+
+.message.sent {
+    background-color: #131313;
+    align-self: flex-end;
+    margin-left: auto;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 5px;
+    padding: 12px 15px;
+}
+
+.message.received {
+    background-color: #131313;
+    align-self: flex-start;
+    margin-right: auto;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 15px;
+}
+
+.message p {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+.message-time {
+  font-size: 0.75em;
+  color: #888;
+  margin-top: 5px;
+}
+
+.message-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.message-file-preview {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 200px; /* Adjust as needed */
+}
+
+.message-image {
+  width: 200px; /* Image size chota karne ke liye */
+  height: 150px;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  transition: filter 0.3s ease; /* Smooth transition for blur */
+}
+
+.message-video {
+  width: 200px; /* Video size chota karne ke liye */
+  height: 150px;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  transition: filter 0.3s ease; /* Smooth transition for blur */
+}
+
+.message-sticker {
+    width: 150px; /* Adjust sticker size as needed */
+    height: 150px;
+    object-fit: contain;
+    display: block;
+}
+
+.message-image-preview {
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 250px; /* Adjust as needed */
+}
+
+.message-file-link {
+  display: block;
+  padding: 10px;
+  background-color: #f0f0f0;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9em;
+  word-break: break-all;
+}
+
+.message-file-link:hover {
+  background-color: #e0e0e0;
+}
+
+.document-type-icon {
+  width: 30px; /* Adjust as needed */
+  height: 30px; /* Adjust as needed */
+  object-fit: contain;
+  margin-right: 8px; /* Space between icon and file name */
+}
+
+.download-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 10; /* Ensure it's above the image/video */
+}
+
+.download-icon:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.download-icon svg {
+  fill: white; /* White icon */
+  width: 24px;
+  height: 24px;
+}
+
+.blurred-download-icon {
+  filter: blur(3px); /* Apply blur to the icon itself */
+  pointer-events: none; /* Disable clicks when blurred */
+  opacity: 0.5; /* Make it slightly transparent */
+}
+
+.progress-circle-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6em;
+  color: #333;
+}
+
+.progress-text {
+  position: absolute;
+  font-size: 0.8em;
+  color: white;
+}
+
+.image-video-container {
+  position: relative;
+  display: inline-block; /* To make sure position absolute works relative to this */
+}
+
+.blurred-image {
+  filter: blur(5px); /* Apply blur effect */
+}
+
+.delete-message-button {
+  background: none;
+  border: none;
+  color: #ff0000; /* Red color for delete */
+  font-size: 1.2em;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.delete-message-button:hover {
+  opacity: 1;
+}
+
+.message-checkbox {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 20;
+}
+
+.message-status {
+  font-size: 0.65em;
+  margin-left: 4px;
+  color: #999;
+  display: inline-block; /* To keep it next to time */
+}
+
+.message.received .message-time {
+  margin-top: 5px; /* Add some top margin for spacing */
+  text-align: left; /* Ensure text is left-aligned */
+}
+
+.seen-ticks {
+  color: #53bdeb; /* WhatsApp-like blue for seen ticks */
+}
+
+.message.no-background-message .message-time {
+  position: static;
+  margin-top: 5px; /* Add some top margin for spacing */
+  text-align: left;
+}
+
+.message.no-background-message {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.message-list::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+}
+
+.message-list::-webkit-scrollbar-track {
+  background: #222; /* Dark track */
+  border-radius: 10px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+  background: #555; /* Darker thumb */
+  border-radius: 10px;
+}
+
+.message-list::-webkit-scrollbar-thumb:hover {
+  background: #777; /* Lighter thumb on hover */
+}
+
+/* For Firefox */
+.message-list {
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: #555 #222; /* thumb and track color */
+}

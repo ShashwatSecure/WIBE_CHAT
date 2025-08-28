@@ -1,0 +1,6 @@
+.file-preview-image,
+.file-preview-video {
+  width: 200px;
+  height: 150px;
+  object-fit: contain;
+}

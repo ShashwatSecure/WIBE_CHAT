@@ -1,0 +1,103 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.select-file-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.select-file-button:hover {
+  background-color: #0056b3;
+}
+
+.selected-files-list {
+  margin-top: 15px;
+  text-align: left;
+  max-height: 150px; /* Add scroll if too many files */
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.selected-files-list h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 1em;
+}
+
+.selected-files-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-files-list li {
+  padding: 5px 0;
+  border-bottom: 1px dashed #f0f0f0;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.selected-files-list li:last-child {
+  border-bottom: none;
+}
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.upload-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.upload-button:disabled {
+  background-color: #90ee90;
+  cursor: not-allowed;
+}
+
+.upload-button:hover:not(:disabled) {
+  background-color: #218838;
+}

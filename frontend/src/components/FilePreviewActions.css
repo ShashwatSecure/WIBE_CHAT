@@ -1,0 +1,28 @@
+.file-preview-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px; /* Added margin-top */
+}
+
+.file-preview-actions button {
+  background-color: #007bff; /* Modern blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.file-preview-actions button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.file-preview-actions button:first-child {
+  background-color: #6c757d; /* Grey for Cancel button */
+}
+
+.file-preview-actions button:first-child:hover {
+  background-color: #5a6268; /* Darker grey on hover */
+}

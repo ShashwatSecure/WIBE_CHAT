@@ -1,0 +1,97 @@
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #000000;
+    /* border-bottom: 1px solid #e0e0e0; */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    z-index: 2;
+    position: relative;
+}
+
+.chat-header .avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  border: 2px solid #007bff;
+}
+
+.chat-header .user-info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.chat-header .user-name {
+  font-weight: 600;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.chat-header .user-status {
+  font-size: 0.9em;
+}
+
+.chat-header .user-status.online {
+  color: #28a745; /* Green for online status */
+}
+
+.chat-header .user-status.offline {
+  color: #dc3545; /* Red for offline status */
+}
+
+.chat-header .chat-actions span {
+  margin-left: 25px;
+  cursor: pointer;
+  font-size: 1.3em;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.chat-header .chat-actions span:hover {
+  color: #007bff;
+}
+
+.three-dots-menu-wrapper {
+  position: relative;
+  cursor: pointer;
+  margin-left: 25px;
+  font-size: 1.3em;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.three-dots-menu-wrapper:hover {
+  color: #007bff;
+}
+
+.chat-action-menu {
+  position: absolute;
+  top: 100%; /* Position below the three dots */
+  right: 0;
+  background-color: #f8f9fa; /* Modern off-white */
+  border-radius: 12px; /* Softer corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer, deeper shadow */
+  padding: 4px; /* Reduced padding */
+  z-index: 100; /* Ensure it's above other content */
+  min-width: 150px; /* Wider menu */
+  border: 1px solid #e9ecef; /* Lighter border */
+}
+
+.chat-action-menu .menu-item {
+  padding: 8px 12px; /* Reduced padding */
+  cursor: pointer;
+  color: #212529; /* Darker text */
+  font-size: 0.8em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Explicitly align to the left */
+  text-align: left; /* Ensure text is left-aligned */
+}
+
+.chat-action-menu .menu-item:hover {
+  background-color: #e9ecef; /* Lighter hover */
+  color: #007bff; /* Highlight color on hover */
+}

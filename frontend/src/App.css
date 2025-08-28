@@ -1,0 +1,150 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Hide scrollbars */
+}
+
+.App {
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #070707;
+}
+
+.auth-app {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: rgba(40, 44, 52, 0.8); /* Darker and transparent */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #f0f0f0; /* Lighter text color */
+}
+
+.App-link {
+  color: #90caf9; /* Adjusted link color */
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Profile Pop-up Styling */
+.profile-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* More transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Above other content */
+  overflow-y: auto; /* Add scroll for smaller screens */
+}
+
+.profile-popup-content {    background-color: rgba(6, 94, 85, 0.9); /* Darker and transparent */
+    padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Darker shadow */
+  text-align: center;
+  max-width: 500px; /* Increased max-width */
+  width: 90%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.profile-popup-content h3 {
+  margin-top: 0;
+  color: #f0f0f0; /* Lighter text color */
+}
+
+.profile-popup-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 3px solid #64b5f6; /* Adjusted border color */
+  align-self: center;
+}
+
+.profile-popup-content p {
+  font-size: 1.1em;
+  color: #e0e0e0; /* Lighter text color */
+  margin-bottom: 20px;
+}
+
+.profile-popup-content button {
+  background-color: #42a5f5; /* Adjusted button color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease;
+  margin-top: 10px; /* Added margin-top */
+}
+
+.profile-popup-content button:hover {
+  background-color: #2196f3; /* Darker hover color */
+}
+
+.profile-popup-content .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.profile-popup-content label {
+  display: block;
+  margin-bottom: 5px;
+  color: #e0e0e0; /* Lighter text color */
+  font-size: 0.9em;
+}
+
+.profile-popup-content input[type="text"],
+.profile-popup-content input[type="password"],
+.profile-popup-content input[type="url"] {
+  width: calc(100% - 22px); /* Adjust for padding and border */
+  padding: 10px;
+  border: 1px solid #616161; /* Darker border */
+  border-radius: 4px;
+  font-size: 1em;
+  background-color: #424242; /* Darker input background */
+  color: #f0f0f0; /* Lighter input text */
+}
+
+.profile-popup-content button.update-button {
+  background-color: #66bb6a; /* Adjusted green for update button */
+}
+
+.profile-popup-content button.update-button:hover {
+  background-color: #4caf50; /* Darker hover color */
+}

@@ -1,0 +1,210 @@
+/* Base styles for the sidebar */
+.profile-sidebar {
+  position: fixed;
+  top: 0;
+  right: -350px; /* Initially hidden to the right */
+  width: 350px;
+  height: 100%;
+  background-color: #0d0d0d !important;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); /* Softer, more pronounced shadow */
+  transition: right 0.3s ease-in-out; /* Smooth slide transition */
+  z-index: 1000; /* Ensure it's on top */
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* State when sidebar is open */
+.profile-sidebar.open {
+  right: 3.5rem; /* Slide into view */
+}
+
+/* Header section */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px; /* More padding */
+  background-color: #0D0D0D; /* Light grey background for header */
+  color: #ffffff; /* Darker text for contrast */
+  border-bottom: 1px solid #e0e0e0; /* Subtle border */
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1.4rem; /* Slightly larger font */
+  font-weight: 600; /* Semi-bold */
+  color: #ffffff; /* Set h3 text color to white */
+}
+
+/* Main content area */
+.sidebar-content {
+  flex-grow: 1;
+  padding: 25px; /* Consistent padding */
+  overflow-y: auto; /* Scrollable content */
+  background-color: #0d0d0d !important;
+}
+
+/* Messages (success/error) */
+.sidebar-message {
+  background-color: #e6ffe6; /* Light green for success */
+  color: #28a745; /* Green text */
+  border: 1px solid #c3e6cb;
+  padding: 12px;
+  border-radius: 8px; /* More rounded corners */
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+/* User info display */
+.user-info-display {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0; /* Lighter border */
+}
+
+.profile-display-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #007bff; /* Accent color border */
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for image */
+}
+
+.user-info-display p {
+  margin: 8px 0;
+  color: #ffffff; /* Softer text color */
+  font-size: 0.9rem;
+}
+
+.user-info-display strong {
+  color: #ffffff;
+}
+
+/* Form sections */
+.profile-update-form, .password-change-form {
+  background-color: #0d0d0d !important;
+  padding: 25px;
+  border-radius: 10px; /* More rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Clearer shadow */
+  margin-bottom: 25px;
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Stack items vertically */
+  gap: 15px; /* Space between form groups */
+}
+
+.profile-update-form h4, .password-change-form h4 {
+  margin-top: 0;
+  margin-bottom: 10px; /* Reduced margin-bottom */
+  color: #ffffff; /* Accent color for headings */
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 0; /* Remove default margin, use gap from parent flex */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #444; /* Darker label color */
+  font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 12px 15px; /* More padding */
+  border: 1px solid #d0d0d0; /* Lighter border */
+  border-radius: 6px; /* Rounded input fields */
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  color: #333;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="file"]:focus {
+  border-color: #007bff; /* Accent color on focus */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Subtle glow on focus */
+  outline: none;
+}
+
+.form-group input[type="file"] {
+  padding: 8px; /* Adjust padding for file input */
+}
+
+.modern-submit-button {
+  background-color: #333333; /* Primary accent color for buttons */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px; /* Rounded buttons */
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: auto !important; /* Changed to auto */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease; /* Smooth transitions */
+  font-weight: 600;
+  margin-top: 10px; /* Add some space above the button */
+  box-shadow: none; /* Initial shadow */
+}
+
+.modern-submit-button:hover {
+  background-color: #555555; /* Darker shade on hover */
+  box-shadow: none; /* More pronounced shadow on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.modern-submit-button:active {
+  background-color: #777777; /* Even darker on click */
+  box-shadow: none; /* Smaller shadow on click */
+  transform: translateY(0); /* Return to original position */
+}
+
+/* Remove old submit-button styles if they exist */
+.submit-button {
+  display: none; /* Hide the old class */
+}
+
+/* Basic App.css for the header and icon (if not already defined) */
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-icon-container {
+  cursor: pointer;
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+}
+
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.default-avatar-icon {
+  font-size: 40px; /* Adjust size for default icon */
+  color: #bbb;
+}

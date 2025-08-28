@@ -1,0 +1,352 @@
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  right: -350px; /* Hidden by default */
+  width: 350px;
+  height: 100%;
+  background-color: #f0f2f5;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Hide overflow from blurred background */
+}
+
+.music-background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px); /* Adjust blur amount as needed */
+  transform: scale(1.1); /* To hide blurred edges */
+  z-index: -1; /* Send to back */
+  opacity: 0.6; /* Adjust opacity for better readability of content */
+}
+
+.sidebar-header,
+.sidebar-content {
+  position: relative; /* Bring content to front */
+  z-index: 1; /* Ensure content is above the blurred background */
+}
+
+.sidebar-container.open {
+  right: 3.5rem; /* Slide in */
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to the top */
+  padding: 10px;
+  background-color: #0D0D0D; /* Default background color */
+  background-image: none; /* Remove background image */
+  color: #ffffff; /* Text color for better contrast */
+}
+
+.sidebar-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  z-index: 1;
+}
+
+.music-player-info, .sidebar-header h3, .close-btn {
+  position: relative;
+  z-index: 2; /* Ensure content is above the overlay */
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: red; /* Changed to red */
+  z-index: 1001; /* Ensure it's above other elements */
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.sidebar-content {
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.2); /* More transparent content background */
+}
+
+.music-search-box {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.music-search-box input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.music-search-box button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.music-search-box button:hover {
+  background-color: #0056b3;
+}
+
+.search-summary {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  flex-grow: 1; /* Allow it to take available space */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Increased margin for better separation */
+  padding: 10px; /* Increased padding */
+  border-radius: 8px; /* More rounded corners */
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+  cursor: pointer; /* Indicate interactivity */
+}
+
+.search-result-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.search-result-item img {
+  width: 60px; /* Slightly smaller thumbnail */
+  height: 60px; /* Slightly smaller thumbnail */
+  margin-right: 10px; /* Reduced margin */
+  border-radius: 8px; /* Rounded corners for image */
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Shadow for image */
+}
+
+.search-result-item .result-info {
+  flex-grow: 1;
+  color: #333;
+  padding: 0;
+}
+
+.search-result-item .result-info h4,
+.search-result-item .result-info p {
+  margin: 0;
+  overflow: hidden;
+  text-align: left;
+}
+
+.search-result-item .result-info h4 {
+  font-size: 0.9em; /* Slightly larger font for title */
+  font-weight: bold;
+  margin-bottom: 2px;
+  color: #000000; /* Black text */
+}
+
+.search-result-item .result-info p {
+  font-size: 0.8em; /* Slightly larger font for artist */
+  color: #333333; /* Darker grey for artist */
+}
+
+.search-result-item .result-info button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.search-result-item .result-info button:hover {
+  background-color: #0056b3;
+}
+
+
+
+.music-player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* Reduced gap */
+  width: 100%;
+  padding: 8px; /* Reduced padding */
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px; /* Smaller radius */
+  backdrop-filter: blur(5px);
+}
+
+.music-player-info h4 {
+  margin: 0;
+  text-align: center;
+  font-size: 0.8em; /* Smaller font size */
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.music-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reduced gap */
+}
+
+.music-controls button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  width: 35px; /* Smaller button */
+  height: 35px; /* Smaller button */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em; /* Smaller icon */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 0;
+  line-height: 0;
+}
+
+.music-controls button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.music-controls input[type="range"] {
+  width: 100px; /* Shorter slider */
+  height: 4px; /* Thinner slider */
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.music-controls input[type="range"]::-webkit-slider-thumb {
+  width: 14px; /* Smaller thumb */
+  height: 14px; /* Smaller thumb */
+  background: white;
+}
+
+.music-controls input[type="range"]::-moz-range-thumb {
+  width: 14px; /* Smaller thumb */
+  height: 14px; /* Smaller thumb */
+  background: white;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.8em;
+  color: white;
+  margin-top: 5px;
+}
+
+.music-icon-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.music-icon-placeholder img {
+  width: 80px;
+  height: 80px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+  content: url('https://www.imagella.com/cdn/shop/files/d7fe36894bfb622064c1c480bcd8d646.jpg');
+}
+
+.music-icon-placeholder h3 {
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.music-player-info p {
+  margin: 0;
+  text-align: center;
+  font-size: 0.7em; /* Smaller font size for artist */
+  color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+}
+
+/* Modern Scrollbar for Webkit browsers */
+.sidebar-content::-webkit-scrollbar,
+.search-results::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+.sidebar-content::-webkit-scrollbar-track,
+.search-results::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+
+.sidebar-content::-webkit-scrollbar-thumb,
+.search-results::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* color of the scroll thumb */
+  border-radius: 10px; /* roundness of the scroll thumb */
+  border: 2px solid transparent; /* creates padding around thumb */
+  background-clip: padding-box; /* ensures border is outside the thumb */
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover,
+.search-results::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4); /* color of the scroll thumb on hover */
+}
+
+/* Modern Scrollbar for Firefox */
+.sidebar-content,
+.search-results {
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* thumb and track color */
+}

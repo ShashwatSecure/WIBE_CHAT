@@ -1,0 +1,97 @@
+.vertical-line-icons-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20px;
+    gap: 20px;
+    z-index: 2;
+    background-color: #000000;
+}
+
+.icon-wrapper {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Size of the clickable area */
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  z-index: 10; /* Increased z-index to ensure it's on top */
+  position: relative; /* Z-index ke liye */
+}
+
+.icon-wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Slight hover effect */
+}
+
+.vertical-icon {
+  color: #ffcf00;
+  width: 24px;
+  height: 24px;
+}
+
+.user-avatar-vertical {
+  width: 100%; /* Fill the parent wrapper */
+  height: 100%; /* Fill the parent wrapper */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white; /* White border for avatar */
+}
+
+.search-icon-shifted {
+  margin-left: -5px; /* Shift search icon left */
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0; /* Position at the top of the parent */
+  right: 0; /* Position at the right of the parent */
+  background-color: #ff0000; /* Red color for badge */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px; /* Smaller padding */
+  font-size: 0.7em; /* Smaller font size */
+  min-width: 16px; /* Smaller min-width */
+  height: 16px; /* Smaller height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  z-index: 9999; /* Very high z-index to ensure visibility */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transform: translate(50%, -50%); /* Shift badge to top-right corner */
+}
+
+.music-search-input-container {
+  position: absolute;
+  right: 4.5rem; /* Adjust based on vertical line width and desired spacing */
+  top: 200px; /* Adjust to align with the music icon */
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+.music-search-input {
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  width: 200px; /* Adjust width as needed */
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.music-search-input:focus {
+  border-color: #007bff;
+}

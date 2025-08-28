@@ -1,0 +1,18 @@
+.play-button {
+  background-color: #21C063 !important;
+  color: white;
+  border: none;
+  border-radius: 50% !important;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.play-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}

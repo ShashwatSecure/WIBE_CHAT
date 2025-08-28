@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-image: url('../../public/background.jpg');
+  background-size: 15%;
+  background-repeat: repeat;
+  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  color: #fff; /* White text for better contrast on animated background */
+}
+
+
+
+.wibe-logo {
+  width: 150px; /* Adjust size as needed */
+  max-width: 80%;
+  height: auto;
+  
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 1)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); /* White outline/glow */
+}
+
+.welcome-container h1 {
+  font-size: 2em;
+  margin-bottom: 40px;
+  color: #fff; /* White color for better contrast on animated background */
+  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for better visibility */
+}
+
+.welcome-button {
+    padding: 15px 40px;
+    background-color: #EC1002;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-button:hover {
+  background-color: #e0e0e0; /* Lighter white on hover */
+  color: #0080CC; /* Darker blue on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
