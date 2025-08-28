@@ -1,6 +1,6 @@
 import os
 
-directory = 'D:/Aavnik/wibe_chat/frontend/public/file-icons'
+directory = 'D:/wibe_chat/frontend/public/file-icons'
 os.makedirs(directory, exist_ok=True)
 
 file_names = [
