@@ -15,11 +15,12 @@ const FriendRequestSchema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'accepted', 'declined'],
     default: 'pending'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true
 });
+
+// Compound index to prevent duplicate friend requests
+FriendRequestSchema.index({ sender: 1, receiver: 1 }, { unique: true });
 
 module.exports = mongoose.model('FriendRequest', FriendRequestSchema);

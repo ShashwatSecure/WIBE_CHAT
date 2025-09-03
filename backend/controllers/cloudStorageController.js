@@ -1,28 +1,9 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
-const multer = require('multer');
-
-// Import Models
-const User = require('../models/User');
-const CloudFolder = require('../models/CloudFolder');
 const CloudFile = require('../models/CloudFile');
-
-// Multer storage configuration - Save to a general uploads directory first
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '..', 'uploads');
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
-});
-
-const uploadDocument = multer({ storage: storage, limits: { fileSize: 15 * 1024 * 1024 * 1024 } });
+const CloudFolder = require('../models/CloudFolder');
+const User = require('../models/User');
 
 // Controller functions
 exports.uploadDocumentFile = async (req, res, io) => {
@@ -35,14 +16,12 @@ exports.uploadDocumentFile = async (req, res, io) => {
 
   try {
     if (!mongoose.Types.ObjectId.isValid(userId)) {
-      // Clean up the uploaded file if userId is invalid
       fs.unlinkSync(tempPath);
       return res.status(400).json({ msg: 'Invalid user ID format' });
     }
 
     const user = await User.findById(userId);
     if (!user) {
-      // Clean up the uploaded file if user is not found
       fs.unlinkSync(tempPath);
       return res.status(404).json({ msg: 'User not found' });
     }
@@ -75,11 +54,12 @@ exports.uploadDocumentFile = async (req, res, io) => {
 
     const newFile = new CloudFile({
       name: originalname,
-      owner: userId,
+      fileName: filename,
+      uploadedBy: userId,
       folder: folderId === 'null' ? null : folderId,
       fileType: mimetype,
       size: size,
-      path: dbPath, // Save the web-accessible path
+      path: dbPath,
     });
 
     await newFile.save();
@@ -87,11 +67,12 @@ exports.uploadDocumentFile = async (req, res, io) => {
     user.cloudStorageUsed += size;
     await user.save();
 
-    io.to(userId).emit('newCloudFile', newFile);
+    if (io) {
+      io.to(userId).emit('newCloudFile', newFile);
+    }
 
     return res.status(200).json({ msg: 'File uploaded successfully', file: newFile });
   } catch (err) {
-    // Clean up the uploaded file in case of an error
     if (fs.existsSync(tempPath)) {
       fs.unlinkSync(tempPath);
     }
@@ -100,17 +81,17 @@ exports.uploadDocumentFile = async (req, res, io) => {
   }
 };
 
-exports.createCloudFolder = async (req, res, io) => { // Pass io instance
-  const { name, ownerId, parentFolderId } = req.body;
+exports.createCloudFolder = async (req, res, io) => {
+  const { name, userId, parentFolderId } = req.body;
 
   try {
-    if (!mongoose.Types.ObjectId.isValid(ownerId)) {
-      return res.status(400).json({ msg: 'Invalid owner ID format' });
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ msg: 'Invalid user ID format' });
     }
 
-    const owner = await User.findById(ownerId);
-    if (!owner) {
-      return res.status(404).json({ msg: 'Owner not found' });
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
     }
 
     let parentFolder = null;
@@ -126,14 +107,15 @@ exports.createCloudFolder = async (req, res, io) => { // Pass io instance
 
     const newFolder = new CloudFolder({
       name,
-      owner: ownerId,
+      createdBy: userId,
       parentFolder: parentFolderId || null,
     });
 
     await newFolder.save();
 
-    // Emit real-time update for new folder
-    io.to(ownerId).emit('newCloudFolder', newFolder);
+    if (io) {
+      io.to(userId).emit('newCloudFolder', newFolder);
+    }
 
     res.status(201).json({ msg: 'Folder created successfully', folder: newFolder });
   } catch (err) {
@@ -143,21 +125,21 @@ exports.createCloudFolder = async (req, res, io) => { // Pass io instance
 };
 
 exports.getCloudFolders = async (req, res) => {
-  const { ownerId, parentFolderId } = req.query;
+  const { userId, parentFolderId } = req.query;
 
   try {
-    if (!mongoose.Types.ObjectId.isValid(ownerId)) {
-      return res.status(400).json({ msg: 'Invalid owner ID format' });
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ msg: 'Invalid user ID format' });
     }
 
-    let query = { owner: ownerId };
+    let query = { createdBy: userId };
     if (parentFolderId) {
       if (!mongoose.Types.ObjectId.isValid(parentFolderId)) {
         return res.status(400).json({ msg: 'Invalid parent folder ID format' });
       }
       query.parentFolder = parentFolderId;
     } else {
-      query.parentFolder = null; // Root folders
+      query.parentFolder = null;
     }
 
     const folders = await CloudFolder.find(query).sort({ createdAt: -1 });
@@ -169,20 +151,19 @@ exports.getCloudFolders = async (req, res) => {
 };
 
 exports.getCloudFiles = async (req, res) => {
-  const { ownerId, folderId } = req.query;
+  const { userId, folderId } = req.query;
 
   try {
-    if (!mongoose.Types.ObjectId.isValid(ownerId)) {
-      return res.status(400).json({ msg: 'Invalid owner ID format' });
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ msg: 'Invalid user ID format' });
     }
 
-    let query = { owner: ownerId };
-    // If folderId is not provided or is 'null', fetch root files (folder: null)
+    let query = { uploadedBy: userId };
     if (!folderId || folderId === 'null') {
       query.folder = null;
     } else if (mongoose.Types.ObjectId.isValid(folderId)) {
       query.folder = folderId;
-    } else { // If folderId is provided but invalid (and not 'null')
+    } else {
       return res.status(400).json({ msg: 'Invalid folder ID format' });
     }
 
@@ -194,9 +175,9 @@ exports.getCloudFiles = async (req, res) => {
   }
 };
 
-exports.deleteCloudFolder = async (req, res, io) => { // Pass io instance
+exports.deleteCloudFolder = async (req, res, io) => {
   const { folderId } = req.params;
-  const { userId } = req.body; // Assuming userId is sent in the body for authorization
+  const { userId } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(folderId)) {
@@ -207,24 +188,23 @@ exports.deleteCloudFolder = async (req, res, io) => { // Pass io instance
     }
 
     const folder = await CloudFolder.findById(folderId);
-
     if (!folder) {
       return res.status(404).json({ msg: 'Folder not found' });
     }
 
-    // Check if the user is the owner of the folder
-    if (folder.owner.toString() !== userId) {
+    if (folder.createdBy.toString() !== userId) {
       return res.status(403).json({ msg: 'Unauthorized: You do not own this folder' });
     }
 
-    // TODO: Implement logic to delete all contents (files/subfolders) within this folder
-    // For now, we'll just delete the folder itself.
-    // This is a critical step for a complete cloud storage solution.
+    // Delete all files in the folder first
+    await CloudFile.deleteMany({ folder: folderId });
 
-    await CloudFolder.deleteOne({ _id: folderId });
+    // Delete the folder
+    await CloudFolder.findByIdAndDelete(folderId);
 
-    // Emit real-time update for deleted folder
-    io.to(userId).emit('cloudFolderDeleted', folderId);
+    if (io) {
+      io.to(userId).emit('cloudFolderDeleted', folderId);
+    }
 
     res.status(200).json({ msg: 'Folder deleted successfully' });
   } catch (err) {
@@ -233,9 +213,9 @@ exports.deleteCloudFolder = async (req, res, io) => { // Pass io instance
   }
 };
 
-exports.deleteCloudFile = async (req, res, io) => { // Pass io instance
+exports.deleteCloudFile = async (req, res, io) => {
   const { fileId } = req.params;
-  const { userId } = req.body; // Assuming userId is sent in the body for authorization
+  const { userId } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(fileId)) {
@@ -246,12 +226,11 @@ exports.deleteCloudFile = async (req, res, io) => { // Pass io instance
     }
 
     const file = await CloudFile.findById(fileId);
-
     if (!file) {
       return res.status(404).json({ msg: 'File not found' });
     }
 
-    if (file.owner.toString() !== userId) {
+    if (file.uploadedBy.toString() !== userId) {
       return res.status(403).json({ msg: 'Unauthorized: You do not own this file' });
     }
 
@@ -262,7 +241,7 @@ exports.deleteCloudFile = async (req, res, io) => { // Pass io instance
         console.error('Error deleting file from file system:', err);
       }
 
-      await CloudFile.deleteOne({ _id: fileId });
+      await CloudFile.findByIdAndDelete(fileId);
 
       const user = await User.findById(userId);
       if (user) {
@@ -271,7 +250,9 @@ exports.deleteCloudFile = async (req, res, io) => { // Pass io instance
         await user.save();
       }
 
-      io.to(userId).emit('cloudFileDeleted', fileId);
+      if (io) {
+        io.to(userId).emit('cloudFileDeleted', fileId);
+      }
 
       res.status(200).json({ msg: 'File deleted successfully' });
     });
@@ -281,7 +262,7 @@ exports.deleteCloudFile = async (req, res, io) => { // Pass io instance
   }
 };
 
-exports.renameCloudFolder = async (req, res, io) => { // Pass io instance
+exports.renameCloudFolder = async (req, res, io) => {
   const { folderId } = req.params;
   const { newName, userId } = req.body;
 
@@ -294,22 +275,20 @@ exports.renameCloudFolder = async (req, res, io) => { // Pass io instance
     }
 
     const folder = await CloudFolder.findById(folderId);
-
     if (!folder) {
       return res.status(404).json({ msg: 'Folder not found' });
     }
 
-    // Check if the user is the owner of the folder
-    if (folder.owner.toString() !== userId) {
+    if (folder.createdBy.toString() !== userId) {
       return res.status(403).json({ msg: 'Unauthorized: You do not own this folder' });
     }
 
-    // Update the folder name
     folder.name = newName;
     await folder.save();
 
-    // Emit real-time update for renamed folder
-    io.to(userId).emit('cloudFolderRenamed', { folderId, newName });
+    if (io) {
+      io.to(userId).emit('cloudFolderRenamed', { folderId, newName });
+    }
 
     res.status(200).json({ msg: 'Folder renamed successfully', folder });
   } catch (err) {
@@ -320,9 +299,11 @@ exports.renameCloudFolder = async (req, res, io) => { // Pass io instance
 
 exports.getCloudStorageUsage = async (req, res) => {
   const { userId } = req.query;
+  
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).json({ msg: 'Invalid User ID format' });
   }
+  
   try {
     const user = await User.findById(userId).select('cloudStorageUsed');
     if (!user) {
@@ -334,6 +315,3 @@ exports.getCloudStorageUsage = async (req, res) => {
     res.status(500).json({ msg: 'Server Error' });
   }
 };
-
-exports.uploadDocument = uploadDocument;
-""

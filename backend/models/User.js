@@ -7,19 +7,18 @@ const UserSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true
-  },
   email: {
     type: String,
     required: true,
     unique: true,
-    trim: true,
-    lowercase: true
+    lowercase: true,
+    trim: true
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
   },
   password: {
     type: String,
@@ -27,37 +26,11 @@ const UserSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: 'https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpskIpB8pmAwuFkC7c5eD7wYws.jpg' // Default profile picture
-  },
-  cloudStorageUsed: {
-    type: Number,
-    default: 0 // Storage used in bytes
+    default: ''
   },
   isVerified: {
     type: Boolean,
     default: false
-  },
-  blockedUsers: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  connectivityStatus: [
-    {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-      status: {
-        type: String,
-        enum: ['active', 'inactive'],
-        default: 'active',
-      },
-    },
-  ],
-  unreadCounts: {
-    type: Map,
-    of: Number,
-    default: {},
   },
   online: {
     type: Boolean,
@@ -67,24 +40,39 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  broadcastGroups: [{
+  cloudStorageUsed: {
+    type: Number,
+    default: 0
+  },
+  blockedUsers: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'BroadcastGroup'
+    ref: 'User'
   }],
-  createdAt: {
-    type: Date,
-    default: Date.now
+  unreadCounts: {
+    type: Map,
+    of: Number,
+    default: {}
   }
+}, {
+  timestamps: true
 });
 
 // Hash password before saving
 UserSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
-    return next();
+  if (!this.isModified('password')) return next();
+  
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
 
-module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
+// Compare password method
+UserSchema.methods.comparePassword = async function(candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
